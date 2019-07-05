@@ -17,6 +17,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 WORKDIR /work/
 COPY target/*-runner /work/application
+RUN mkdir /camel
 COPY src/main/resources/camel/routes.xml /camel/routes.xml
 RUN chmod 775 /work
 EXPOSE 8080

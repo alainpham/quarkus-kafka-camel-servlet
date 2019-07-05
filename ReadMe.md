@@ -8,3 +8,9 @@ This project show how to :
 
 
 More details here Link to blog article to come
+
+To run everything (Kafka + Project) locally :
+
+```
+docker-compose up
+```
