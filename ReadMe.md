@@ -22,7 +22,7 @@ Create container image
 docker build -f src/main/docker/Dockerfile.native -t quarkus/quarkus-kafka-camel-servlet .
 ```
 
-Create adjust docker compose image with customized environment props
+Create adjust docker compose image with customized environment props. The following command will help you convert prop files into environment variable standard.
 
 ```
 cat src/main/resources/application.properties | awk -F= '{gsub("\\.|-","_",$1) ;print "export " toupper($1)  "=" $2 }'
@@ -32,4 +32,10 @@ To run everything (Kafka + Project) locally :
 
 ```
 docker-compose up
+```
+
+To test it 
+
+```
+curl http://localhost:8080/camel/send  -X POST -H "Content-Type: text/plain"  -d 'Hello there!!'
 ```
