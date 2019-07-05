@@ -1,7 +1,7 @@
 version: '2'
-
+networks:
+  main:
 services:
-
   zookeeper:
     image: strimzi/kafka:0.12.1-kafka-2.1.0
     command: [
@@ -12,7 +12,10 @@ services:
       - "2181:2181"
     environment:
       LOG_DIR: /tmp/logs
-
+    networks:
+      main:
+        aliases:
+          - zookeeper
   kafka:
     image: strimzi/kafka:0.12.1-kafka-2.1.0
     command: [
@@ -25,13 +28,23 @@ services:
       - "9092:9092"
     environment:
       LOG_DIR: "/tmp/logs"
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
+    networks:
+      main:
+        aliases:
+          - kafka
   quarkus-kafka-camel-servlet:
     image: alainpham/quarkus-kafka-camel-servlet
     depends_on:
       - kafka
     ports:
       - "8080:8080"
+    environment:
+      - 'MP_MESSAGING_INCOMING_IN_EVENTS_BOOTSTRAP_SERVERS=kafka:9092'
+      - 'MP_MESSAGING_OUTGOING_OUT_EVENTS_BOOTSTRAP_SERVERS=kafka:9092'
+    networks:
+      main:
+        aliases:
+          - quarkus-kafka-camel-servlet

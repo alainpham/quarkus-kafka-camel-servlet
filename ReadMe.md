@@ -9,6 +9,25 @@ This project show how to :
 
 More details here Link to blog article to come
 
+
+Compile natively
+
+```
+mvn package -Pnative
+```
+
+Create container image
+
+```
+docker build -f src/main/docker/Dockerfile.native -t quarkus/quarkus-kafka-camel-servlet .
+```
+
+Create adjust docker compose image with customized environment props
+
+```
+cat src/main/resources/application.properties | awk -F= '{gsub("\\.|-","_",$1) ;print "export " toupper($1)  "=" $2 }'
+```
+
 To run everything (Kafka + Project) locally :
 
 ```
