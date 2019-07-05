@@ -7,7 +7,7 @@ This project show how to :
 - Wire a Camel producer template to a SmallRye incoming annotated method for Camel to receive messages from Kafka
 
 
-More details here Link to blog article to come
+More details here Link to blog article.
 
 
 Compile natively
@@ -33,6 +33,10 @@ To run everything (Kafka + Project) locally :
 ```
 docker-compose up
 ```
+
+You can get the container image here
+
+https://hub.docker.com/r/alainpham/quarkus-kafka-camel-servlet
 
 To test it 
 
